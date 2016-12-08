@@ -4,18 +4,12 @@ corpus = open("telegram_corpus.csv",'a')
 crp_wr = csv.writer(corpus)
 
 
-def feed_corpus(update):
-	if 'message' not in update.keys():
-		return False
+def feed_corpus(bot, update):
 
-	msg = update['message']
+	usr_id = update.message.from_user.id
+	fname = update.message.from_user.first_name
+	chat_id = update.message.chat_id
+	usrname = update.message.from_user.username
+	text = update.message.text
 
-	if 'from' not in msg.keys() or 'text' not in msg.keys():
-		return False
-
-	usr = msg['from']['first_name']
-	text = msg['text'].replace('\n', ' ')
-
-	crp_wr.writerow([usr, text])
-
-	return True
+	crp_wr.writerow([usr_id, chat_id, fname, usrname, text])
